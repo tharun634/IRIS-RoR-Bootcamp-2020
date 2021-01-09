@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Fizz Buzz is a word game for children to teach them about division.
 #
 # We will use it to learn about transforming traditional C-like for
@@ -29,7 +31,7 @@
 # For example, fizz_buzz(n: 6, x: 2, y: 3) should return the following:
 # ["1", "Fizz", "Buzz", "Fizz", "5", "FizzBuzz"]
 #
-# What happens if the function is called by x (or y) = 0 or negative? 
+# What happens if the function is called by x (or y) = 0 or negative?
 #
 # The divisiblity by zero is not defined and neither do the little
 # children know how to divide by negative numbers.
@@ -37,5 +39,21 @@
 # We will raise an `ArgumentError` exception to let the caller know that
 # their function arguments were incorrect.
 def fizz_buzz(n:, x: 3, y: 5)
-  raise NotImplementedError # TODO
+
+  raise ArgumentError if n.negative? || x <= 0 || y <= 0
+
+  list = (1..n).to_a
+
+  list.map! do |element|
+    i = if (element % x).zero? && (element % y).zero?
+          'FizzBuzz'
+        elsif (element % x).zero?
+          'Fizz'
+        elsif (element % y).zero?
+          'Buzz'
+        else
+          element.to_s
+        end
+  end
+  list
 end
